@@ -1,0 +1,17 @@
+{
+  "name": "movies",
+  "version": "1.0.0",
+  "description": "Test project",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Ivan Kovic",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  },
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
