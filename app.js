@@ -1,7 +1,7 @@
 var express = require('express')
     , app = express();
 
-var db = require('./helpers/db');
+var db = require('./app/helpers/db');
 
 //app.use('/comments', require('./controllers/comments'));
 //app.use('/users', require('./controllers/users'));

@@ -24,6 +24,6 @@ exports.close = function(done) {
             state.db = null;
             state.mode = null;
             done(err);
-        })
+        });
     }
 };
