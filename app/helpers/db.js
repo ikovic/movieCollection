@@ -1,4 +1,7 @@
-var MongoClient = require('mongodb').MongoClient;
+var mongo = require('mongodb'),
+    MongoClient = mongo.MongoClient,
+    ObjectId = mongo.ObjectID;
+
 var state = {
     db: null,
 };
@@ -11,6 +14,10 @@ exports.connect = function (url, done) {
         state.db = db;
         done();
     });
+};
+
+exports.getObjectId = function (id) {
+    return ObjectId(id);
 };
 
 exports.get = function () {

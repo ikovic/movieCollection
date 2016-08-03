@@ -1,6 +1,6 @@
 var db = require('../helpers/db');
 
-exports.all = function (cb) {
+exports.findAll = function (cb) {
     var collection = db.get().collection('movies');
 
     collection.find().toArray(function (err, docs) {
@@ -8,7 +8,16 @@ exports.all = function (cb) {
     });
 };
 
-exports.byUser = function (userId, cb) {
+exports.findById = function (movieId, cb) {
+    var collection = db.get().collection('movies'),
+        oid = db.getObjectId(movieId);
+
+    collection.find({_id: oid}).limit(1).next(function (err, doc) {
+        cb(err, doc);
+    });
+};
+
+exports.findByUser = function (userId, cb) {
     var collection = db.get().collection('movies');
 
     collection.find().toArray(function (err, docs) {
