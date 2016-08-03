@@ -3,8 +3,8 @@ var express = require('express')
 
 var db = require('./app/helpers/db');
 
-//app.use('/comments', require('./controllers/comments'));
-//app.use('/users', require('./controllers/users'));
+// wire in Movie controller
+app.use('/api', require('./app/controllers/movies'));
 
 // Connect to Mongo on start
 db.connect('mongodb://localhost:27017/movieCollection', function (err) {

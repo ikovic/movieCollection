@@ -1,4 +1,6 @@
 {
   "preset": "airbnb",
-  "validateLineBreaks": null
+  "validateLineBreaks": null,
+  "requireSpacesInsideObjectBrackets": null,
+  "validateIndentation": null
 }
