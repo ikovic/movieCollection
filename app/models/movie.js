@@ -44,14 +44,6 @@ exports.findByIds = function (movieIds, cb) {
     });
 };
 
-exports.findByUser = function (userId, cb) {
-    var collection = db.get().collection('movies');
-
-    collection.find().toArray(function (err, docs) {
-        cb(err, docs);
-    });
-};
-
 /**
  * Save a movie to the DB
  * @param movie

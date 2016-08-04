@@ -34,12 +34,18 @@ exports.findBySlug = function (slug, cb) {
 exports.save = function (newCollection, cb) {
     var collection = db.get().collection('users');
 
+    // add a slug which will be used as uid instead of real ID
     newCollection.slug = crypto.randomBytes(6).toString('hex');
     collection.insertOne(newCollection, function (err, doc) {
         cb(err, doc);
     });
 };
 
+/**
+ * Update the given collection
+ * @param existingCollection
+ * @param cb
+ */
 exports.update = function (existingCollection, cb) {
     var collection = db.get().collection('users');
 
@@ -53,7 +59,3 @@ exports.update = function (existingCollection, cb) {
             cb(err, doc);
         });
 };
-
-// slug generator
-//var id = crypto.randomBytes(6).toString('hex');
-//=> bb5dc8842ca31d4603d6aa11448d1654

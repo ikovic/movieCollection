@@ -2,5 +2,7 @@
   "preset": "airbnb",
   "validateLineBreaks": null,
   "requireSpacesInsideObjectBrackets": null,
-  "validateIndentation": null
+  "validateIndentation": null,
+  "disallowMultipleVarDecl": null,
+  "requireTrailingComma": null
 }
