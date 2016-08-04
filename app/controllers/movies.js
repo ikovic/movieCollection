@@ -1,5 +1,5 @@
 var express = require('express'),
-    router = express.Router(),    
+    router = express.Router(),
     Movie = require('../models/movie');
 
 /**
@@ -7,16 +7,33 @@ var express = require('express'),
  */
 router.route('/movie')
     .get(function (req, res) {
-        Movie.findAll(function (err, docs) {
-            if (err) {
-                res.json({
-                    message: 'error',
-                    error: err
-                });
-            } else {
-                res.json(docs);
-            }
-        });
+        // query string parsing
+        var ids = req.query.id;
+        if (ids && ids.constructor == Array) {
+            // looking for multiple IDs
+            Movie.findByIds(ids, function (err, docs) {
+                if (err) {
+                    res.json({
+                        message: 'error',
+                        error: err
+                    });
+                } else {
+                    res.json(docs);
+                }
+            });
+        } else {
+            // return all movies
+            Movie.findAll(function (err, docs) {
+                if (err) {
+                    res.json({
+                        message: 'error',
+                        error: err
+                    });
+                } else {
+                    res.json(docs);
+                }
+            });
+        }
     })
     .post(function (req, res) {
         console.log(req);

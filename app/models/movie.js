@@ -26,6 +26,24 @@ exports.findById = function (movieId, cb) {
     });
 };
 
+/**
+ * Get multiple movies by ID array
+ * @param movieId = array of IDs
+ * @param cb
+ */
+exports.findByIds = function (movieIds, cb) {
+    var collection = db.get().collection('movies'),
+        oids;
+
+    oids = movieIds.map(function (id) {
+        return db.getObjectId(id);
+    });
+
+    collection.find({_id: {$in: oids}}).toArray(function (err, docs) {
+        cb(err, docs);
+    });
+};
+
 exports.findByUser = function (userId, cb) {
     var collection = db.get().collection('movies');
 
