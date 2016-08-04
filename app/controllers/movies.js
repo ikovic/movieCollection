@@ -23,7 +23,6 @@ router.route('/movie')
         }
     })
     .post(function (req, res) {
-        console.log(req);
         var newMovie = req.body;
         Movie.save(newMovie, function (err, doc) {
             resHelper.handleApiResponse(err, doc, res);
