@@ -13,4 +13,11 @@ router.route('/collection')
         });
     });
 
+router.route('/collection/:slug')
+    .get(function (req, res) {
+        Collection.findBySlug(req.params.slug, function (err, doc) {
+            resHelper.handleApiResponse(err, doc, res);
+        });
+    });
+
 module.exports = router;
