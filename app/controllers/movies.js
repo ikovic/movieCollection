@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express.Router(),
-    Movie = require('../models/movie');
+    Movie = require('../models/movie'),
+    resHelper = require('../helpers/responseHelper');
 
 /**
  * Movies API
@@ -12,26 +13,12 @@ router.route('/movie')
         if (ids && ids.constructor == Array) {
             // looking for multiple IDs
             Movie.findByIds(ids, function (err, docs) {
-                if (err) {
-                    res.json({
-                        message: 'error',
-                        error: err
-                    });
-                } else {
-                    res.json(docs);
-                }
+                resHelper.handleApiResponse(err, docs, res);
             });
         } else {
             // return all movies
             Movie.findAll(function (err, docs) {
-                if (err) {
-                    res.json({
-                        message: 'error',
-                        error: err
-                    });
-                } else {
-                    res.json(docs);
-                }
+                resHelper.handleApiResponse(err, docs, res);
             });
         }
     })
@@ -39,28 +26,14 @@ router.route('/movie')
         console.log(req);
         var newMovie = req.body;
         Movie.save(newMovie, function (err, doc) {
-            if (err) {
-                res.json({
-                    message: 'error',
-                    error: err
-                });
-            } else {
-                res.json(doc);
-            }
+            resHelper.handleApiResponse(err, doc, res);
         });
     });
 
 router.route('/movie/:movieId')
     .get(function (req, res) {
         Movie.findById(req.params.movieId, function (err, doc) {
-            if (err) {
-                res.json({
-                    message: 'error',
-                    error: err
-                });
-            } else {
-                res.json(doc);
-            }
+            resHelper.handleApiResponse(err, doc, res);
         });
     })
     .put(function (req, res) {
