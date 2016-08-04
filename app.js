@@ -7,8 +7,9 @@ var express = require('express'),
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// wire in Movies controller
+// wire in controllers
 app.use('/api', require('./app/controllers/movies'));
+app.use('/api', require('./app/controllers/collections'));
 
 // Connect to Mongo on start
 db.connect('mongodb://localhost:27017/movieCollection', function (err) {

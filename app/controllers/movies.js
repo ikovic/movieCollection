@@ -2,6 +2,9 @@ var express = require('express'),
     router = express.Router(),    
     Movie = require('../models/movie');
 
+/**
+ * Movies API
+ */
 router.route('/movie')
     .get(function (req, res) {
         Movie.findAll(function (err, docs) {

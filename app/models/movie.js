@@ -1,5 +1,9 @@
 var db = require('../helpers/db');
 
+/**
+ * Get all movies from DB
+ * @param cb
+ */
 exports.findAll = function (cb) {
     var collection = db.get().collection('movies');
 
@@ -8,6 +12,11 @@ exports.findAll = function (cb) {
     });
 };
 
+/**
+ * Get a single movie from DB
+ * @param movieId
+ * @param cb
+ */
 exports.findById = function (movieId, cb) {
     var collection = db.get().collection('movies'),
         oid = db.getObjectId(movieId);
@@ -25,6 +34,11 @@ exports.findByUser = function (userId, cb) {
     });
 };
 
+/**
+ * Save a movie to the DB
+ * @param movie
+ * @param cb
+ */
 exports.save = function (movie, cb) {
     var collection = db.get().collection('movies');
 
