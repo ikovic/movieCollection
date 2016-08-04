@@ -24,3 +24,11 @@ exports.findByUser = function (userId, cb) {
         cb(err, docs);
     });
 };
+
+exports.save = function (movie, cb) {
+    var collection = db.get().collection('movies');
+
+    collection.insertOne(movie, function (err, doc) {
+        cb(err, doc);
+    });
+};

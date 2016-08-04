@@ -1,9 +1,13 @@
-var express = require('express')
-    , app = express();
+var express = require('express'),
+    app = express(),
+    bodyParser = require('body-parser'),
+    db = require('./app/helpers/db');
 
-var db = require('./app/helpers/db');
+// configure app to use bodyParser for POST data
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-// wire in Movie controller
+// wire in Movies controller
 app.use('/api', require('./app/controllers/movies'));
 
 // Connect to Mongo on start
