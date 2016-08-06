@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // wire in controllers
 app.use('/api', require('./app/controllers/movies'));
+app.use('/api', require('./app/controllers/movieOrders'));
 app.use('/api', require('./app/controllers/collections'));
 
 // Connect to Mongo on start

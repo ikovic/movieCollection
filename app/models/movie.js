@@ -1,4 +1,5 @@
-var db = require('../helpers/db');
+var db = require('../helpers/db'),
+    Client = require('node-rest-client').Client;
 
 /**
  * Get all movies from DB
@@ -54,5 +55,13 @@ exports.save = function (movie, cb) {
 
     collection.insertOne(movie, function (err, doc) {
         cb(err, doc);
+    });
+};
+
+exports.addByImdbId = function (imdbId, cb) {
+    var client = new Client();
+
+    client.get("http://www.omdbapi.com/?i=" + imdbId, function (data, response) {
+        cb(data);
     });
 };
