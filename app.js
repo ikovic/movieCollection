@@ -1,5 +1,6 @@
 var express = require('express'),
     app = express(),
+    session = require('express-session'),
     bodyParser = require('body-parser'),
     db = require('./app/helpers/db'),
     passport = require('passport'),
@@ -14,16 +15,22 @@ app.use('/api', require('./app/controllers/movies'));
 app.use('/api', require('./app/controllers/movieOrders'));
 app.use('/api', require('./app/controllers/collections'));
 
+// required for passport session
+app.use(session({
+    secret: 'secrettexthere',
+    saveUninitialized: true,
+    resave: true
+}));
+
 // OAuth2 stuff
+passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
-passportConfig(passport);
 app.use('/', require('./app/controllers/auth'));
 app.use('/logout', function (req, res) {
     req.logout();
     res.redirect('/');
 });
-
 
 // Connect to Mongo on start
 db.connect('mongodb://localhost:27017/movieCollection', function (err) {
