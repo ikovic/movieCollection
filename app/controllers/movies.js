@@ -1,13 +1,14 @@
 var express = require('express'),
     router = express.Router(),
     Movie = require('../models/movie'),
-    resHelper = require('../helpers/responseHelper');
+    resHelper = require('../helpers/responseHelper'),
+    authMiddleware = require('../middlewares/auth');
 
 /**
  * Movies API
  */
 router.route('/movie')
-    .get(function (req, res) {
+    .get(authMiddleware.isAuthenticated, function (req, res) {
         // query string parsing
         var ids = req.query.id;
         if (ids && ids.constructor == Array) {
