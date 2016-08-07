@@ -8,7 +8,7 @@ module.exports = function (passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function (collection, done) {
-        done(null, collection._id);
+        done(null, collection);
     });
 
     // used to deserialize the user
@@ -36,12 +36,9 @@ module.exports = function (passport) {
                         return done(err);
 
                     if (user) {
-
                         // if a user is found, log them in
                         return done(null, user);
                     } else {
-
-                        console.log(profile);
 
                         // if the user isnt in our database, create a new user
                         var newUser = {google: {}};
@@ -57,7 +54,7 @@ module.exports = function (passport) {
                         Collection.save(newUser, function (err, doc) {
                             if (err)
                                 throw err;
-                            return done(null, newUser);
+                            return done(null, doc);
                         });
                     }
                 });

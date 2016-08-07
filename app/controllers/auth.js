@@ -11,7 +11,7 @@ router.route('/auth/google')
 
 router.route('/auth/google/callback')
     .get(passport.authenticate('google', {
-        successRedirect: '/',
+        successRedirect: '/api/movies',
         failureRedirect: '/login'
     }));
 
