@@ -58,7 +58,25 @@ exports.save = function (movie, cb) {
     });
 };
 
-exports.addByImdbId = function (imdbId, cb) {
+/**
+ * Find a movie by the IMDb ID
+ * @param imdbId
+ * @param cb
+ */
+exports.findByImdbId = function (imdbId, cb) {
+    var collection = db.get().collection('movies');
+
+    collection.find({"imdbID": imdbId}).limit(1).next(function (err, doc) {
+        cb(err, doc);
+    });
+};
+
+/**
+ * Get movie from external service by IMDb Id
+ * @param imdbId
+ * @param cb
+ */
+exports.fetchByImdbId = function (imdbId, cb) {
     var client = new Client();
 
     client.get("http://www.omdbapi.com/?i=" + imdbId, function (data, response) {

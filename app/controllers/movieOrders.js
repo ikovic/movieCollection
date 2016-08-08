@@ -8,21 +8,28 @@ var express = require('express'),
  */
 router.route('/movieOrder')
     .post(function (req, res) {
-        var newOrder = req.body,
-            newMovie = null;
+        var imdbId = req.body.imdbId;
 
-        console.log(newOrder);
-
-        if (newOrder.imdbId) {
-            Movie.addByImdbId(newOrder.imdbId, function (movie) {
-                Movie.save(movie, function (err, doc) {
-                    resHelper.handleApiResponse(err, doc, res);
+        // check if the movie is already in the DB
+        Movie.findByImdbId(imdbId, function (err, doc) {
+            if (!err && doc) {
+                // movie exists, return that
+                res.json(doc);
+            } else {
+                // get the movie from OMDb
+                Movie.fetchByImdbId(imdbId, function (movie) {
+                    Movie.save(movie, function (err, doc) {
+                        if (!err && doc) {
+                            movie._id = doc.insertedId;
+                            resHelper.handleApiResponse(err, movie, res);
+                        } else {
+                            resHelper.handleApiResponse(err, doc, res);
+                        }
+                    });
                 });
-            });
-        } else {
-            console.log('NYI');
-            res.json({error: 'NYI'});
-        }
+            }
+        });
+
     });
 
 module.exports = router;
