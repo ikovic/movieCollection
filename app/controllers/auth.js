@@ -15,6 +15,14 @@ router.route('/google/callback')
         failureRedirect: '/login'
     }));
 
+router.route('/google/signIn')
+    .post(passport.authenticate('google-id-token'),
+        function (req, res) {
+            // do something with req.user
+            res.sendStatus(req.user ? 200 : 401);
+        });
+
+
 router.route('/logout')
     .get(function (req, res) {
         req.logout();
