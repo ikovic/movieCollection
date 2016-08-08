@@ -11,10 +11,16 @@ router.route('/movie')
     .get(function (req, res) {
         // query string parsing
         var ids = req.query.id;
+        var title = req.query.title;
         if (ids && ids.constructor == Array) {
             // looking for multiple IDs
             Movie.findByIds(ids, function (err, docs) {
                 resHelper.handleApiResponse(err, docs, res);
+            });
+        } else if (title && title.length) {
+            // searching by title
+            Movie.searchByTitle(title, function (docs) {
+                resHelper.handleApiResponse(null, docs, res);
             });
         } else {
             // return all movies

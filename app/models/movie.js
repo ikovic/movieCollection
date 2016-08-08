@@ -78,8 +78,19 @@ exports.findByImdbId = function (imdbId, cb) {
  */
 exports.fetchByImdbId = function (imdbId, cb) {
     var client = new Client();
-
     client.get("http://www.omdbapi.com/?i=" + imdbId, function (data, response) {
+        cb(data);
+    });
+};
+
+/**
+ * Get a list of movies based on title search from external service
+ * @param title
+ * @param cb
+ */
+exports.searchByTitle = function (title, cb) {
+    var client = new Client();
+    client.get("http://www.omdbapi.com/?type=movie&s=" + title, function (data, response) {
         cb(data);
     });
 };
