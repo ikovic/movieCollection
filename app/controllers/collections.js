@@ -1,7 +1,8 @@
 var express = require('express'),
     router = express.Router(),
     Collection = require('../models/collection'),
-    resHelper = require('../helpers/responseHelper');
+    resHelper = require('../helpers/responseHelper'),
+    authMiddleware = require('../middlewares/auth');
 
 /**
  * Collections API
@@ -12,7 +13,7 @@ router.route('/collection')
             resHelper.handleApiResponse(err, docs, res);
         });
     })
-    .post(function (req, res) {
+    .post(authMiddleware.isAuthenticated, function (req, res) {
         var newCollection = req.body;
         Collection.save(newCollection, function (err, doc) {
             resHelper.handleApiResponse(err, doc, res);
@@ -25,7 +26,7 @@ router.route('/collection/:slug')
             resHelper.handleApiResponse(err, doc, res);
         });
     })
-    .put(function (req, res) {
+    .put(authMiddleware.isAuthenticated, function (req, res) {
         var updatedCollection = req.body;
         Collection.update(updatedCollection, function (err, doc) {
             resHelper.handleApiResponse(err, doc, res);

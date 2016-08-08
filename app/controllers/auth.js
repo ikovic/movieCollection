@@ -18,7 +18,6 @@ router.route('/google/callback')
 router.route('/google/signIn')
     .post(passport.authenticate('google-id-token'),
         function (req, res) {
-            // do something with req.user
             res.sendStatus(req.user ? 200 : 401);
         });
 
@@ -26,7 +25,7 @@ router.route('/google/signIn')
 router.route('/logout')
     .get(function (req, res) {
         req.logout();
-        res.redirect('/');
+        res.sendStatus(200);
     });
 
 module.exports = router;

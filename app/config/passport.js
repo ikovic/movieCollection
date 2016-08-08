@@ -25,23 +25,22 @@ module.exports = function (passport) {
         function (parsedToken, googleId, done) {
             // try to find the user based on their google id
             Collection.findByGoogleId(googleId, function (err, user) {
-                if (err)
+                if (err) {
                     return done(err);
+                }
 
                 if (user) {
                     // if a user is found, log them in
                     return done(null, user);
                 } else {
-
-                    // if the user isnt in our database, create a new user
+                    // if the user isn't in our database, create a new user
                     var newUser = {google: {}};
 
                     // set all of the relevant information
-                    newUser.google.id = profile.id;
-                    newUser.google.token = token;
-                    newUser.google.name = profile.displayName;
-                    newUser.google.email = profile.emails[0].value; // pull the first email
-                    newUser.google.image = profile._json.image.url;
+                    newUser.google.id = googleId;
+                    newUser.google.name = parsedToken.payload.name;
+                    newUser.google.email = parsedToken.payload.email;
+                    newUser.google.image = "";
 
                     // save the user
                     Collection.save(newUser, function (err, doc) {
