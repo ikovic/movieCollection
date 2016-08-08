@@ -13,6 +13,23 @@ exports.findAll = function (cb) {
     });
 };
 
+exports.findById = function (collectionId, cb) {
+    var collection = db.get().collection('users'),
+        oid = db.getObjectId(collectionId);
+
+    collection.find({_id: oid}).limit(1).next(function (err, doc) {
+        cb(err, doc);
+    });
+};
+
+exports.findByGoogleId = function (googleId, cb) {
+    var collection = db.get().collection('users');
+
+    collection.find({'google.id': googleId}).limit(1).next(function (err, doc) {
+        cb(err, doc);
+    });
+};
+
 /**
  * Find a collection by slug
  * @param slug
