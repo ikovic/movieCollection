@@ -10,11 +10,6 @@ var express = require('express'),
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// wire in controllers
-app.use('/api', require('./app/controllers/movies'));
-app.use('/api', require('./app/controllers/movieOrders'));
-app.use('/api', require('./app/controllers/collections'));
-
 // required for passport session
 app.use(session({
     secret: 'secrettexthere',
@@ -26,11 +21,13 @@ app.use(session({
 passportConfig(passport);
 app.use(passport.initialize());
 app.use(passport.session());
-app.use('/', require('./app/controllers/auth'));
-app.use('/logout', function (req, res) {
-    req.logout();
-    res.redirect('/');
-});
+
+// wire in controllers
+app.use('/auth', require('./app/controllers/auth'));
+app.use('/api', require('./app/controllers/movies'));
+app.use('/api', require('./app/controllers/movieOrders'));
+app.use('/api', require('./app/controllers/collections'));
+
 
 // Connect to Mongo on start
 db.connect('mongodb://localhost:27017/movieCollection', function (err) {
