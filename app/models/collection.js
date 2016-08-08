@@ -22,10 +22,10 @@ exports.findById = function (collectionId, cb) {
     });
 };
 
-exports.findByGoogleId = function (profile, cb) {
+exports.findByGoogleId = function (googleId, cb) {
     var collection = db.get().collection('users');
 
-    collection.find({'google.id': profile.id}).limit(1).next(function (err, doc) {
+    collection.find({'google.id': googleId}).limit(1).next(function (err, doc) {
         cb(err, doc);
     });
 };
