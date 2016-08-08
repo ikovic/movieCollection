@@ -18,7 +18,11 @@ router.route('/google/callback')
 router.route('/google/signIn')
     .post(passport.authenticate('google-id-token'),
         function (req, res) {
-            res.sendStatus(req.user ? 200 : 401);
+            if (req.user) {
+                res.json(req.user);
+            } else {
+                res.sendStatus(401);
+            }
         });
 
 
