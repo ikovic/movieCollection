@@ -49,7 +49,7 @@ exports.searchByTitle = function (title, cb) {
     var collection = db.get().collection('users'),
         query = new RegExp('^' + title, 'i');
 
-    collection.find({"google.name": query}).toArray(function (err, docs) {
+    collection.find({"google.name": query}).limit(10).toArray(function (err, docs) {
         cb(err, docs);
     });
 };
