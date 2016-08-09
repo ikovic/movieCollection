@@ -47,9 +47,9 @@ exports.findByGoogleId = function (googleId, cb) {
  */
 exports.searchByTitle = function (title, cb) {
     var collection = db.get().collection('users'),
-        query = new RegExp('^' + title);
+        query = new RegExp('^' + title, 'i');
 
-    collection.find({"title": query}).toArray(function (err, docs) {
+    collection.find({"google.name": query}).toArray(function (err, docs) {
         cb(err, docs);
     });
 };

@@ -9,8 +9,8 @@ var express = require('express'),
  */
 router.route('/collection')
     .get(function (req, res) {
-        if (req.params.title) {
-            Collection.searchByTitle(req.params.title, function (err, docs) {
+        if (req.query.title) {
+            Collection.searchByTitle(req.query.title, function (err, docs) {
                 resHelper.handleApiResponse(err, docs, res);
             });
         } else {
