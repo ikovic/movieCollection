@@ -9,9 +9,15 @@ var express = require('express'),
  */
 router.route('/collection')
     .get(function (req, res) {
-        Collection.findAll(function (err, docs) {
-            resHelper.handleApiResponse(err, docs, res);
-        });
+        if (req.params.title) {
+            Collection.searchByTitle(req.params.title, function (err, docs) {
+                resHelper.handleApiResponse(err, docs, res);
+            });
+        } else {
+            Collection.findAll(function (err, docs) {
+                resHelper.handleApiResponse(err, docs, res);
+            });
+        }
     })
     .post(authMiddleware.isAuthenticated, function (req, res) {
         var newCollection = req.body;

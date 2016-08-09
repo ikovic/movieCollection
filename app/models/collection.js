@@ -13,6 +13,11 @@ exports.findAll = function (cb) {
     });
 };
 
+/**
+ * Get the collection by id
+ * @param collectionId
+ * @param cb
+ */
 exports.findById = function (collectionId, cb) {
     var collection = db.get().collection('users'),
         oid = db.getObjectId(collectionId);
@@ -22,11 +27,30 @@ exports.findById = function (collectionId, cb) {
     });
 };
 
+/**
+ * Get the collection by google id
+ * @param googleId
+ * @param cb
+ */
 exports.findByGoogleId = function (googleId, cb) {
     var collection = db.get().collection('users');
 
     collection.find({'google.id': googleId}).limit(1).next(function (err, doc) {
         cb(err, doc);
+    });
+};
+
+/**
+ * Search by title which begins with the given title string
+ * @param title
+ * @param cb
+ */
+exports.searchByTitle = function (title, cb) {
+    var collection = db.get().collection('users'),
+        query = new RegExp('^' + title);
+
+    collection.find({"title": query}).toArray(function (err, docs) {
+        cb(err, docs);
     });
 };
 
