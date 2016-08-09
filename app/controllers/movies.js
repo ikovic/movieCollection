@@ -17,6 +17,13 @@ router.route('/movie')
             Movie.findByIds(ids, function (err, docs) {
                 resHelper.handleApiResponse(err, docs, res);
             });
+        } else if (ids) {
+            // a single ID received, return array
+            Movie.findById(ids, function (err, doc) {
+                var wrapper = [];
+                wrapper.push(doc);
+                resHelper.handleApiResponse(err, wrapper, res);
+            });
         } else if (title && title.length) {
             // searching by title
             Movie.searchByTitle(title, function (docs) {
