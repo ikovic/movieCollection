@@ -9,12 +9,14 @@ module.exports = function (passport) {
 
     // used to serialize the user for the session
     passport.serializeUser(function (collection, done) {
+        console.log('called serialize', collection);
         done(null, collection);
     });
 
     // used to deserialize the user
     passport.deserializeUser(function (user, done) {
         Collection.findById(user._id, function (err, collection) {
+            console.log('called deserialize', collection);
             done(err, collection);
         });
     });
@@ -44,8 +46,9 @@ module.exports = function (passport) {
 
                     // save the user
                     Collection.save(newUser, function (err, doc) {
-                        if (err)
+                        if (err) {
                             throw err;
+                        }
                         return done(null, doc);
                     });
                 }
@@ -84,8 +87,9 @@ module.exports = function (passport) {
 
                         // save the user
                         Collection.save(newUser, function (err, doc) {
-                            if (err)
+                            if (err) {
                                 throw err;
+                            }
                             return done(null, doc);
                         });
                     }
