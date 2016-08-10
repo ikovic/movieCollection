@@ -35,10 +35,15 @@ router.route('/collection/:slug')
         });
     })
     .put([authMiddleware.isAuthenticated, validate(validators.updateCollection)], function (req, res) {
-        var updatedCollection = req.body;
-        Collection.update(updatedCollection, function (err, doc) {
-            resHelper.handleApiResponse(err, doc, res);
-        });
+        // authorize first
+        if (req.user._id != req.body._id) {
+            res.sendStatus(403);
+        } else {
+            var updatedCollection = req.body;
+            Collection.update(updatedCollection, function (err, doc) {
+                resHelper.handleApiResponse(err, doc, res);
+            });
+        }
     });
 
 module.exports = router;

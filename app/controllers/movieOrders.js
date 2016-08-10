@@ -23,7 +23,7 @@ router.route('/movieOrder')
                         res.json({
                             status: 400,
                             error: 'Bad IMDb Id'
-                        })
+                        });
                     } else {
                         Movie.save(movie, function (err, doc) {
                             if (!err && doc) {
