@@ -1,5 +1,5 @@
 const config = {
-    mongoUrl: 'mongodb://localhost:27017/movieCollection',
+    mongoUrl: 'mongodb://ds153815.mlab.com:53815/heroku_1ttbg5n2',
     port: 3000
 };
 
