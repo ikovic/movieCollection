@@ -28,6 +28,8 @@ app.use('/api', require('./app/controllers/movies'));
 app.use('/api', require('./app/controllers/movieOrders'));
 app.use('/api', require('./app/controllers/collections'));
 
+// serve static files
+app.use(express.static('public'));
 
 // Connect to Mongo on start
 db.connect('mongodb://localhost:27017/movieCollection', function (err) {
