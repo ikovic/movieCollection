@@ -38,7 +38,7 @@ db.connect(config.mongoUrl, function (err) {
         console.log('Unable to connect to Mongo.');
         process.exit(1)
     } else {
-        app.listen(config.port, function () {
+        app.listen(process.env.PORT ||config.port, function () {
             console.log('Listening on port 3000...');
         })
     }
