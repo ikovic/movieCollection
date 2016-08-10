@@ -44,8 +44,9 @@ module.exports = function (passport) {
 
                     // save the user
                     Collection.save(newUser, function (err, doc) {
-                        if (err)
+                        if (err) {
                             throw err;
+                        }
                         return done(null, doc);
                     });
                 }
@@ -84,8 +85,9 @@ module.exports = function (passport) {
 
                         // save the user
                         Collection.save(newUser, function (err, doc) {
-                            if (err)
+                            if (err) {
                                 throw err;
+                            }
                             return done(null, doc);
                         });
                     }

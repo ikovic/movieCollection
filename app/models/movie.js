@@ -78,7 +78,7 @@ exports.findByImdbId = function (imdbId, cb) {
  */
 exports.fetchByImdbId = function (imdbId, cb) {
     var client = new Client();
-    client.get("http://www.omdbapi.com/?i=" + imdbId, function (data, response) {
+    client.get("http://www.omdbapi.com/?type=movie&i=" + imdbId, function (data, response) {
         cb(data);
     });
 };

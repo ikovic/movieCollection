@@ -74,12 +74,11 @@ exports.findBySlug = function (slug, cb) {
  */
 exports.save = function (newCollection, cb) {
     var collection = db.get().collection('users');
-
     // add a slug which will be used as uid instead of real ID
     newCollection.slug = crypto.randomBytes(6).toString('hex');
     newCollection.movieIds = [];
-    collection.insertOne(newCollection, function (err, doc) {
-        cb(err, doc);
+    collection.insertOne(newCollection, function (err, result) {
+        cb(err, result.ops[0]);
     });
 };
 

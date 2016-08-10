@@ -18,14 +18,22 @@ router.route('/movieOrder')
             } else {
                 // get the movie from OMDb
                 Movie.fetchByImdbId(imdbId, function (movie) {
-                    Movie.save(movie, function (err, doc) {
-                        if (!err && doc) {
-                            movie._id = doc.insertedId;
-                            resHelper.handleApiResponse(err, movie, res);
-                        } else {
-                            resHelper.handleApiResponse(err, doc, res);
-                        }
-                    });
+                    if (movie && movie.Response === 'False') {
+                        // no movie with the given Id
+                        res.json({
+                            status: 400,
+                            error: 'Bad IMDb Id'
+                        });
+                    } else {
+                        Movie.save(movie, function (err, doc) {
+                            if (!err && doc) {
+                                movie._id = doc.insertedId;
+                                resHelper.handleApiResponse(err, movie, res);
+                            } else {
+                                resHelper.handleApiResponse(err, doc, res);
+                            }
+                        });
+                    }
                 });
             }
         });

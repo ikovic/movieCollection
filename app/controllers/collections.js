@@ -2,7 +2,9 @@ var express = require('express'),
     router = express.Router(),
     Collection = require('../models/collection'),
     resHelper = require('../helpers/responseHelper'),
-    authMiddleware = require('../middlewares/auth');
+    authMiddleware = require('../middleware/auth'),
+    validate = require('express-validation'),
+    validators = require('../middleware/validators');
 
 /**
  * Collections API
@@ -19,7 +21,7 @@ router.route('/collection')
             });
         }
     })
-    .post(authMiddleware.isAuthenticated, function (req, res) {
+    .post([authMiddleware.isAuthenticated, validate(validators.createCollection)], function (req, res) {
         var newCollection = req.body;
         Collection.save(newCollection, function (err, doc) {
             resHelper.handleApiResponse(err, doc, res);
@@ -32,11 +34,16 @@ router.route('/collection/:slug')
             resHelper.handleApiResponse(err, doc, res);
         });
     })
-    .put(authMiddleware.isAuthenticated, function (req, res) {
-        var updatedCollection = req.body;
-        Collection.update(updatedCollection, function (err, doc) {
-            resHelper.handleApiResponse(err, doc, res);
-        });
+    .put([authMiddleware.isAuthenticated, validate(validators.updateCollection)], function (req, res) {
+        // authorize first
+        if (req.user._id != req.body._id) {
+            res.sendStatus(403);
+        } else {
+            var updatedCollection = req.body;
+            Collection.update(updatedCollection, function (err, doc) {
+                resHelper.handleApiResponse(err, doc, res);
+            });
+        }
     });
 
 module.exports = router;
