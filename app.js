@@ -4,7 +4,8 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     db = require('./app/helpers/db'),
     passport = require('passport'),
-    passportConfig = require('./app/config/passport');
+    passportConfig = require('./app/config/passport'),
+    config = require('./app/config/config');
 
 // configure app to use bodyParser for POST data
 app.use(bodyParser.json());
@@ -30,12 +31,12 @@ app.use('/api', require('./app/controllers/collections'));
 
 
 // Connect to Mongo on start
-db.connect('mongodb://localhost:27017/movieCollection', function (err) {
+db.connect(config.mongoUrl, function (err) {
     if (err) {
         console.log('Unable to connect to Mongo.');
         process.exit(1)
     } else {
-        app.listen(3000, function () {
+        app.listen(config.port, function () {
             console.log('Listening on port 3000...');
         })
     }
